@@ -46,14 +46,15 @@ jobs:
             
             mkdir -p dist
             
-            go build -ldflags="-s -w" -a -v -o TechChallengeApp .
-            
-            cp TechChallengeApp dist/
-            cp -r assets dist/
+            go build -ldflags="-s -w" -a -o TechChallengeApp .
+
+            pushd ui
+            rice append --exec ../TechChallengeApp
+            popd
+
+            mv TechChallengeApp dist/
             cp conf.toml dist/
             
-            rm TechChallengeApp
-
             export version=$(cat versionfile)
             
             zip -r "output/TechChallengeApp_${version}_linux64.zip" dist/*
@@ -71,13 +72,14 @@ jobs:
             
             mkdir -p dist
             
-            go build -ldflags="-s -w" -a -v -o TechChallengeApp .
-            
-            cp TechChallengeApp dist/
-            cp -r assets dist/
+            go build -ldflags="-s -w" -a -o TechChallengeApp .
+
+            pushd ui
+            rice append --exec ../TechChallengeApp
+            popd
+
+            mv TechChallengeApp dist/
             cp conf.toml dist/
-            
-            rm TechChallengeApp
 
             export version=$(cat versionfile)
 
@@ -100,13 +102,14 @@ jobs:
             
             mkdir -p dist
             
-            go build -ldflags="-s -w" -a -v -o TechChallengeApp.exe .
-            
-            cp TechChallengeApp.exe dist/
-            cp -r assets dist/
+            go build -ldflags="-s -w" -a -o TechChallengeApp.exe .
+
+            pushd ui
+            rice append --exec ../TechChallengeApp.exe
+            popd
+
+            mv TechChallengeApp.exe dist/
             cp conf.toml dist/
-            
-            rm TechChallengeApp.exe
 
             export version=$(cat versionfile)
 
@@ -125,13 +128,14 @@ jobs:
             
             mkdir -p dist
             
-            go build -ldflags="-s -w" -a -v -o TechChallengeApp.exe .
-            
-            cp TechChallengeApp.exe dist/
-            cp -r assets dist/
+            go build -ldflags="-s -w" -a -o TechChallengeApp.exe .
+
+            pushd ui
+            rice append --exec ../TechChallengeApp.exe
+            popd
+
+            mv TechChallengeApp.exe dist/
             cp conf.toml dist/
-            
-            rm TechChallengeApp.exe
 
             export version=$(cat versionfile)
 

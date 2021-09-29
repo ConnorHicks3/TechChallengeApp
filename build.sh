@@ -8,10 +8,11 @@ mkdir -p dist
 
 go mod tidy
 
-go build -ldflags="-s -w" -a -v -o TechChallengeApp .
+CGO_ENABLED="0" go build -ldflags="-s -w" -a -o TechChallengeApp .
 
-cp TechChallengeApp dist/
-cp -r assets dist/
+pushd ui
+rice append --exec TechChallengeApp
+popd
+
+mv TechChallengeApp dist/
 cp conf.toml dist/
-
-rm TechChallengeApp
