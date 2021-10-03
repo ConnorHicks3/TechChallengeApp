@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servian-testapp
+  labels:
+    app: servian-testapp
+spec:
+  selector:
+    matchLabels:
+      app: servian-testapp
+  template:
+    metadata:
+      labels:
+        app: servian-testapp
+    spec:
+      containers:
+        - name: testapp
+          image: gcr.io/verdant-lattice-326502/servian-testapp
+          args:
+            - 'serve'
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servian-testapp
+spec:
+  type: ClusterIP
+  selector:
+    app: servian-testapp
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servian-testapp-ext
+spec:
+  type: LoadBalancer
+  selector:
+    app: servian-testapp
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
