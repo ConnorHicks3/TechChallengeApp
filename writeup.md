@@ -14,3 +14,9 @@
   NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
   hello-server   LoadBalancer   10.3.240.165   34.151.106.70   80:30955/TCP   4m46s
   ```
+
+- Deploying Servian app
+
+  ```
+  [TechChallengeApp]$ gcloud builds submit
+  ```
