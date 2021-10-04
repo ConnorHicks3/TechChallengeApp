@@ -1,0 +1,8 @@
+---
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build','-t','gcr.io/servian-app-1/app','.']
+
+# Push image to project container registry for use in deploy step
+images:
+  - 'gcr.io/servian-app-1/app'

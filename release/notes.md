@@ -4,6 +4,7 @@
 - Google Cloud
   - Enable required APIs
     - Kubernetes Engine API
+    - Cloud Build API
   - Create new project *servian-testapp-1*
     - `gcloud projects create servian-app-1`
   - Set active project
@@ -13,6 +14,9 @@
 
 # Build
 - Build container images from Dockerfile
+  - Generate cloudbuild.yaml configuration
+  - Submit build with config
+    - `gcloud builds submit --config release/cloudbuild.yaml`
 
 # Deploy
 - Create Kubernetes deployment manifest
