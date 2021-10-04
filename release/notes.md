@@ -20,9 +20,10 @@
 
 # Deploy
 - Create Kubernetes deployment manifest
-  - Contains the following:
-    - 1x Load Balancer
-    - 2x following:
-      - 1x TechChallengeApp frontend
-      - 1x PostgreSQL database
+  - Contains the following objects:
+    - 1x Deployment - `gcr.io/servian-app-1/app:latest`
+      - Replicated 2x
+    - 1x Service - ClusterIP
+    - 1x Service - LoadBalancer
+  - Still needs:
     - 1x Persistent Volume
