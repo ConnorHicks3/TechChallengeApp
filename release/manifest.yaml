@@ -17,8 +17,11 @@ spec:
       containers:
         - name: servian-app
           image: gcr.io/servian-app-1/app:latest
-          args:
-            - serve
+          args: ['serve']
+          env:
+            # So much time for such a little config value...
+            - name: VTT_LISTENHOST
+              value: 0.0.0.0
           ports:
             - containerPort: 3000
 

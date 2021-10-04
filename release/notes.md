@@ -21,9 +21,13 @@
 # Deploy
 - Create Kubernetes deployment manifest
   - Contains the following objects:
-    - 1x Deployment - `gcr.io/servian-app-1/app:latest`
-      - Replicated 2x
-    - 1x Service - ClusterIP
-    - 1x Service - LoadBalancer
+    - Servian App: `release/app-manifest.yaml`
+      - 1x Deployment - `gcr.io/servian-app-1/app:latest`
+        - Replicated 2x
+      - 1x Service - ClusterIP
+      - 1x Service - LoadBalancer
   - Apply manifest
     - `kubectl apply -f release/manifest.yaml`
+
+# Reflections
+- As always, it's the little things that get you. In my case, I spent a solid day trying to work out why the app wasn't working. I finally found that the listener in the config was set to `localhost` instead of `0.0.0.0`. /shrug
