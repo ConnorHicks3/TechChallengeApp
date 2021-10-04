@@ -21,11 +21,13 @@
 # Deploy
 - Create Kubernetes deployment manifest
   - Contains the following objects:
-    - Servian App: `release/app-manifest.yaml`
-      - 1x Deployment - `gcr.io/servian-app-1/app:latest`
-        - Replicated 2x
-      - 1x Service - ClusterIP
+    - Servian App:
+      - 1x Deployment
+        - `gcr.io/servian-app-1/app:latest`
+        - `postgres:10`
+      - 2x Service - ClusterIP
       - 1x Service - LoadBalancer
+      - 1x PersistentVolume
   - Apply manifest
     - `kubectl apply -f release/manifest.yaml`
 
