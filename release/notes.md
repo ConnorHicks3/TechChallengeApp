@@ -25,5 +25,5 @@
       - Replicated 2x
     - 1x Service - ClusterIP
     - 1x Service - LoadBalancer
-  - Still needs:
-    - 1x Persistent Volume
+  - Apply manifest
+    - `kubectl apply -f release/manifest.yaml`
