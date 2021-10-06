@@ -36,6 +36,7 @@ spec:
         resources:
           requests:
             storage: 1Gi
+        storageClassName: standard
 
 ---
 # Exposes database internally
@@ -52,13 +53,24 @@ spec:
       targetPort: 5432
 
 ---
+# Creates persistent storage for the database
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
   name: data
 spec:
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
+  capacity:
+    storage: 5Gi
+  local:
+    path: /var/lib/pgsql/data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname
+            operator: In
+            values:
+              - servian-app
+  storageClassName: standard
