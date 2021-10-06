@@ -20,8 +20,16 @@ spec:
         - name: db
           image: postgres:10
           env:
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: db-user
             - name: POSTGRES_PASSWORD
-              value: changeme
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: db-password
           ports:
             - containerPort: 5432
           volumeMounts:

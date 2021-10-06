@@ -25,7 +25,10 @@ spec:
             - name: VTT_DBPORT
               value: '5432'
             - name: VTT_DBPASSWORD
-              value: changeme
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: db-password
       containers:
         # Servian App container
         - name: app
@@ -36,8 +39,16 @@ spec:
               value: servian-backend-service
             - name: VTT_DBPORT
               value: '5432'
+            - name: VTT_DBUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: db-user
             - name: VTT_DBPASSWORD
-              value: changeme
+              valueFrom:
+                secretKeyRef:
+                  name: db-creds
+                  key: db-password
             # So much time for such a little config value...
             - name: VTT_LISTENHOST
               value: 0.0.0.0
