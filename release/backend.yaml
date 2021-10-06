@@ -6,7 +6,7 @@ metadata:
   name: servian-backend-deployment
 spec:
   serviceName: "servian-backend"
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: servian-backend
@@ -27,16 +27,10 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/pgsql/data
               name: data
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-        storageClassName: standard
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pv-data
 
 ---
 # Exposes database internally
@@ -55,22 +49,13 @@ spec:
 ---
 # Creates persistent storage for the database
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
-  name: data
+  name: pv-data
 spec:
   accessModes:
     - ReadWriteOnce
-  capacity:
-    storage: 5Gi
-  local:
-    path: /var/lib/pgsql/data
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-              - servian-app
+  resources:
+    requests:
+      storage: 1Gi
   storageClassName: standard
