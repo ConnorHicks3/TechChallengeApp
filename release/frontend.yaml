@@ -1,0 +1,73 @@
+---
+# Deployment for TechChallenge app frontend
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servian-frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: servian-frontend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: servian-frontend
+    spec:
+      initContainers:
+        # Initialize the database
+        - name: initdb
+          image: gcr.io/servian-app-1/app:latest
+          args: ['updatedb']
+          env:
+            - name: VTT_DBHOST
+              value: servian-backend-service
+            - name: VTT_DBPORT
+              value: '5432'
+            - name: VTT_DBPASSWORD
+              value: changeme
+      containers:
+        # Servian App container
+        - name: app
+          image: gcr.io/servian-app-1/app:latest
+          args: ['serve']
+          env:
+            - name: VTT_DBHOST
+              value: servian-backend-service
+            - name: VTT_DBPORT
+              value: '5432'
+            - name: VTT_DBPASSWORD
+              value: changeme
+            # So much time for such a little config value...
+            - name: VTT_LISTENHOST
+              value: 0.0.0.0
+          ports:
+            - containerPort: 3000
+
+---
+# Exposes TechChallenge app internally
+apiVersion: v1
+kind: Service
+metadata:
+  name: servian-frontend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: servian-frontend
+  ports:
+  - port: 80
+    targetPort: 3000
+
+---
+# Exposes TechChallenge app externally
+apiVersion: v1
+kind: Service
+metadata:
+  name: servian-frontend-service-ext
+spec:
+  type: LoadBalancer
+  selector:
+    app: servian-frontend
+  ports:
+    - port: 80
+      targetPort: 3000
