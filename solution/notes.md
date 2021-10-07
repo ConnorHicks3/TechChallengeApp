@@ -17,7 +17,7 @@
 - Build container images from Dockerfile
   - Generate cloudbuild.yaml configuration
   - Submit build with config
-    - `gcloud builds submit --config release/cloudbuild.yaml`
+    - `gcloud builds submit --config solution/cloudbuild.yaml`
 
 # Deploy
 - Create Kubernetes deployment manifest
@@ -34,8 +34,8 @@
       kubectl create secret generic db-creds --from-literal=db-user=<username> --from-literal=db-password=<password>
       ```
   - Apply manifests
-    - `kubectl apply -f release/backend.yaml`
-    - `kubectl apply -f release/frontend.yaml`
+    - `kubectl apply -f solution/backend.yaml`
+    - `kubectl apply -f solution/frontend.yaml`
 
 
 # Reflections
